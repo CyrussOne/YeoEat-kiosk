@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* YeloEat Kiosk Color System */
+    --background: 147 25% 16%; /* #1d3d2e - dark green */
+    --foreground: 48 74% 70%; /* #ebdc76 - gold/yellow text */
+
+    --card: 147 25% 16%;
+    --card-foreground: 48 74% 70%;
+
+    --popover: 147 25% 16%;
+    --popover-foreground: 48 74% 70%;
+
+    /* Primary: Gold/Yellow buttons */
+    --primary: 48 74% 70%; /* #ebdc76 */
+    --primary-foreground: 0 0% 0%; /* black text on buttons */
+
+    /* Secondary */
+    --secondary: 147 25% 16%;
+    --secondary-foreground: 48 74% 70%;
+
+    --muted: 147 25% 20%;
+    --muted-foreground: 48 74% 60%;
+
+    --accent: 48 74% 70%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 48 74% 70%;
+    --input: 147 25% 20%;
+    --ring: 48 74% 70%;
+
+    --radius: 24px;
+    
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 84% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 0 84% 60%;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 84% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 0 84% 60%;
+    
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 84% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 0 84% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Kiosk fullscreen viewport */
+  html, body, #root {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 0;
+  }
+}
+
+@layer utilities {
+  .decorative-border {
+    position: relative;
+  }
+  
+  .decorative-border::before,
+  .decorative-border::after {
+    content: '';
+    position: absolute;
+    border: 2px solid hsl(var(--foreground));
+    border-radius: 24px;
+    pointer-events: none;
+  }
+  
+  .decorative-border::before {
+    top: 24px;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+}
