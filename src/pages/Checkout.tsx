@@ -35,6 +35,12 @@ const Checkout = () => {
           de: "Ihre Bestellung wird bearbeitet..."
         }));
 
+        console.log("=== ORDER DEBUG START ===");
+        console.log("Payment Method:", paymentMethod);
+        console.log("Service Type:", serviceType);
+        console.log("Language:", language);
+        console.log("Cart items:", cart);
+
         // Simulate payment delay
         await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -52,7 +58,12 @@ const Checkout = () => {
           })),
         };
 
+        console.log("Order Data:", JSON.stringify(orderData, null, 2));
+        console.log("Calling createOrder...");
+
         const order = await createOrder(orderData);
+
+        console.log("Order created:", order);
 
         if (!order) {
           throw new Error("Failed to create order");
@@ -68,7 +79,12 @@ const Checkout = () => {
         });
 
       } catch (error) {
-        console.error("Order creation failed:", error);
+        console.error("=== ORDER ERROR ===");
+        console.error("Error type:", error instanceof Error ? error.constructor.name : typeof error);
+        console.error("Error message:", error instanceof Error ? error.message : error);
+        console.error("Full error:", error);
+        console.error("Error stack:", error instanceof Error ? error.stack : "No stack trace");
+
         toast.error(t({
           en: "Order failed. Please try again.",
           de: "Bestellung fehlgeschlagen. Bitte versuchen Sie es erneut."
