@@ -133,6 +133,32 @@ INSERT INTO products (name, name_de, description, description_de, price, categor
 ON CONFLICT (sku) DO NOTHING;
 
 -- ====================================
+-- PART 4: Create Diagnostic Logs Table
+-- ====================================
+
+-- Create diagnostic_logs table for storing system diagnostics
+CREATE TABLE IF NOT EXISTS diagnostic_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  device_id TEXT,
+  platform TEXT NOT NULL,
+  is_native BOOLEAN NOT NULL DEFAULT false,
+  user_agent TEXT,
+  app_version TEXT,
+  log_data JSONB NOT NULL,
+  log_text TEXT NOT NULL,
+  printer_status TEXT,
+  supabase_connected BOOLEAN,
+  error_count INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Create indexes for diagnostic logs
+CREATE INDEX IF NOT EXISTS idx_diagnostic_logs_created_at ON diagnostic_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_diagnostic_logs_platform ON diagnostic_logs(platform);
+CREATE INDEX IF NOT EXISTS idx_diagnostic_logs_device_id ON diagnostic_logs(device_id);
+CREATE INDEX IF NOT EXISTS idx_diagnostic_logs_error_count ON diagnostic_logs(error_count);
+
+-- ====================================
 -- SUCCESS! Database is ready
 -- ====================================
 

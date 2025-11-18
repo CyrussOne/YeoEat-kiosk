@@ -21,6 +21,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProducts from "./pages/admin/Products";
 import AdminOrders from "./pages/admin/Orders";
 import AdminUsers from "./pages/admin/Users";
+import AdminDiagnosticLogs from "./pages/admin/DiagnosticLogs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -77,6 +78,14 @@ const App = () => (
                   element={
                     <ProtectedRoute>
                       <AdminUsers />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/diagnostic-logs"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDiagnosticLogs />
                     </ProtectedRoute>
                   }
                 />

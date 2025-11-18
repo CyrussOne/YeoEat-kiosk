@@ -5,10 +5,20 @@ import { toast } from "sonner";
 import Printer from "@/plugins/printer";
 import { supabase } from "@/integrations/supabase/client";
 import { Capacitor } from "@capacitor/core";
+import { saveDiagnosticLog } from "@/services/diagnosticLogs";
+import type { DiagnosticLogData } from "@/services/diagnosticLogs";
 
 const SystemDiagnostics = () => {
   const [diagnosticLog, setDiagnosticLog] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [diagnosticMetadata, setDiagnosticMetadata] = useState<{
+    platform: string;
+    isNative: boolean;
+    printerStatus: string;
+    supabaseConnected: boolean;
+    errorCount: number;
+  } | null>(null);
 
   const log = (message: string) => {
     const timestamp = new Date().toISOString();
@@ -20,6 +30,14 @@ const SystemDiagnostics = () => {
   const runDiagnostics = async () => {
     setIsRunning(true);
     setDiagnosticLog([]);
+
+    let metadata = {
+      platform: Capacitor.getPlatform(),
+      isNative: Capacitor.isNativePlatform(),
+      printerStatus: "unknown",
+      supabaseConnected: false,
+      errorCount: 0,
+    };
 
     log("========================================");
     log("YELOEAT KIOSK - SYSTEM DIAGNOSTICS");
@@ -62,9 +80,12 @@ const SystemDiagnostics = () => {
         log(`✗ Supabase Error: ${error.message}`);
         log(`  Code: ${error.code}`);
         log(`  Details: ${error.details}`);
+        metadata.supabaseConnected = false;
+        metadata.errorCount++;
       } else {
         log(`✓ Supabase connection successful`);
         log(`  Retrieved ${data?.length || 0} products`);
+        metadata.supabaseConnected = true;
       }
     } catch (error) {
       log(`✗ Supabase connection failed: ${error}`);
@@ -114,10 +135,13 @@ const SystemDiagnostics = () => {
         const statusResult = await Printer.getPrinterStatus();
         log("✓ getPrinterStatus() call successful");
         log(`  Result: ${JSON.stringify(statusResult, null, 2)}`);
+        metadata.printerStatus = statusResult.isConnected ? "connected" : "disconnected";
       } catch (statusError: any) {
         log(`✗ getPrinterStatus() failed: ${statusError.message || statusError}`);
         log(`  Error type: ${typeof statusError}`);
         log(`  Full error: ${JSON.stringify(statusError, null, 2)}`);
+        metadata.printerStatus = "error";
+        metadata.errorCount++;
       }
     } catch (error: any) {
       log(`✗ Printer plugin check failed: ${error.message || error}`);
@@ -160,6 +184,9 @@ const SystemDiagnostics = () => {
     log("DIAGNOSTICS COMPLETE");
     log("========================================");
 
+    // Save metadata for Supabase upload
+    setDiagnosticMetadata(metadata);
+
     setIsRunning(false);
     toast.success("Diagnostics completed!");
   };
@@ -182,6 +209,53 @@ const SystemDiagnostics = () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     toast.success("Diagnostic log downloaded!");
+  };
+
+  const saveToSupabase = async () => {
+    if (!diagnosticMetadata || diagnosticLog.length === 0) {
+      toast.error("No diagnostic data to save!");
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      // Get device ID (use a combination of platform and user agent hash)
+      const deviceId = `${diagnosticMetadata.platform}-${navigator.userAgent.substring(0, 50)}`;
+
+      const diagnosticData: DiagnosticLogData = {
+        device_id: deviceId,
+        platform: diagnosticMetadata.platform,
+        is_native: diagnosticMetadata.isNative,
+        user_agent: navigator.userAgent,
+        app_version: "1.0.0", // TODO: Get from package.json or config
+        log_data: {
+          platform: diagnosticMetadata.platform,
+          isNative: diagnosticMetadata.isNative,
+          printerStatus: diagnosticMetadata.printerStatus,
+          supabaseConnected: diagnosticMetadata.supabaseConnected,
+          errorCount: diagnosticMetadata.errorCount,
+          timestamp: new Date().toISOString(),
+        },
+        log_text: diagnosticLog.join("\n"),
+        printer_status: diagnosticMetadata.printerStatus,
+        supabase_connected: diagnosticMetadata.supabaseConnected,
+        error_count: diagnosticMetadata.errorCount,
+      };
+
+      const result = await saveDiagnosticLog(diagnosticData);
+
+      if (result.success) {
+        toast.success(`✅ Saved to Supabase! Log ID: ${result.id?.substring(0, 8)}...`);
+      } else {
+        toast.error(`❌ Failed to save: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("Error saving to Supabase:", error);
+      toast.error("❌ Error saving to Supabase!");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -220,6 +294,16 @@ const SystemDiagnostics = () => {
               size="lg"
             >
               💾 Download Log
+            </Button>
+
+            <Button
+              onClick={saveToSupabase}
+              disabled={diagnosticLog.length === 0 || isSaving}
+              variant="default"
+              className="text-lg py-6 px-8 bg-green-600 hover:bg-green-700"
+              size="lg"
+            >
+              {isSaving ? "⏳ Saving..." : "☁️ Save to Supabase"}
             </Button>
           </div>
 
