@@ -22,14 +22,23 @@ const Landing = () => {
     <div className="w-[1080px] h-[1920px] flex items-center justify-center bg-background relative">
       <AccessibilityButton />
 
-      {/* Test Button - Bottom Right */}
-      <Button
-        onClick={() => navigate("/printer-test")}
-        className="fixed bottom-8 right-8 z-50 bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
-        size="lg"
-      >
-        🖨️ Test
-      </Button>
+      {/* Test Buttons - Bottom Right */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4">
+        <Button
+          onClick={() => navigate("/diagnostics")}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🔧 Debug
+        </Button>
+        <Button
+          onClick={() => navigate("/printer-test")}
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🖨️ Test
+        </Button>
+      </div>
 
       <div className="absolute inset-0 decorative-border" />
       
@@ -105,17 +114,29 @@ const Landing = () => {
     >
       <AccessibilityButton />
 
-      {/* Test Button - Bottom Right */}
-      <Button
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent triggering language selection
-          navigate("/printer-test");
-        }}
-        className="fixed bottom-8 right-8 z-50 bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
-        size="lg"
-      >
-        🖨️ Test
-      </Button>
+      {/* Test Buttons - Bottom Right */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4">
+        <Button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering language selection
+            navigate("/diagnostics");
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🔧 Debug
+        </Button>
+        <Button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering language selection
+            navigate("/printer-test");
+          }}
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🖨️ Test
+        </Button>
+      </div>
 
       <div className="absolute inset-0 decorative-border" />
     </div>
