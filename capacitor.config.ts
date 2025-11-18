@@ -5,6 +5,8 @@ const config: CapacitorConfig = {
   appName: 'YeloEat Kiosk',
   webDir: 'dist',
   server: {
+    url: 'https://yeo-eat-kiosk.vercel.app',
+    cleartext: true,
     androidScheme: 'https'
   }
 };
