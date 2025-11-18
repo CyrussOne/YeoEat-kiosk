@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
+import Printer from "@/plugins/printer";
 import {
   formatReceipt,
   generateTestReceipt,
-  printReceiptToSerial,
   type ReceiptData,
 } from "@/services/receiptPrinter";
 
@@ -28,8 +28,24 @@ const PrinterTest = () => {
 
     setIsPrinting(true);
     try {
-      await printReceiptToSerial(receiptPreview);
-      toast.success("✅ Beleg erfolgreich gedruckt!");
+      // Use Capacitor printer plugin for Android/iOS
+      const testData = generateTestReceipt();
+      const result = await Printer.printReceipt({
+        orderNumber: testData.order_number,
+        items: testData.items.map(item => ({
+          name: testData.language === 'de' && item.name_de ? item.name_de : item.name,
+          quantity: item.quantity,
+          price: item.total_price,
+        })),
+        total: testData.total,
+        language: testData.language,
+      });
+
+      if (result.success) {
+        toast.success("✅ " + result.message);
+      } else {
+        toast.error("❌ " + result.message);
+      }
     } catch (error) {
       console.error("Print error:", error);
       toast.error("❌ Druckfehler: " + (error as Error).message);
@@ -86,10 +102,11 @@ const PrinterTest = () => {
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h3 className="font-bold mb-2">ℹ️ Hinweise:</h3>
                 <ul className="text-sm space-y-1 list-disc list-inside">
-                  <li>Drucker per USB/Serial verbinden</li>
-                  <li>Beim Drucken wird Serieller Port abgefragt</li>
-                  <li>Wintec SDP sollte bei 9600 Baud laufen</li>
+                  <li>Wintec SDP per USB verbinden</li>
+                  <li>Funktioniert nur in der Android APK</li>
+                  <li>Im Browser: verwendet window.print()</li>
                   <li>ESC/POS Epson-kompatibel</li>
+                  <li>Android SDK muss implementiert sein</li>
                 </ul>
               </div>
             </div>
