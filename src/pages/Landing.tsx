@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AccessibilityButton from "@/components/AccessibilityButton";
+import { useCart } from "@/contexts/CartContext";
 import welcomeBg from "@/assets/welcome-bg.png";
 import ukFlag from "@/assets/flag-uk.png";
 import deFlag from "@/assets/flag-de.png";
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { clearCart } = useCart();
   const [showLanguageSelection, setShowLanguageSelection] = useState(false);
   const [language, setLanguage] = useState("de"); // German as default
 
@@ -40,6 +42,7 @@ const Landing = () => {
           {/* English */}
           <button
             onClick={() => {
+              clearCart(); // Clear cart for new customer
               setLanguage("en");
               localStorage.setItem("language", "en");
               navigate("/service-type");
@@ -61,6 +64,7 @@ const Landing = () => {
           {/* German */}
           <button
             onClick={() => {
+              clearCart(); // Clear cart for new customer
               setLanguage("de");
               localStorage.setItem("language", "de");
               navigate("/service-type");
