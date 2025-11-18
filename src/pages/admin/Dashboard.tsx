@@ -84,41 +84,59 @@ export default function AdminDashboard() {
             <CardTitle>Quick Links</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               <a
                 href="/admin/products"
-                className="p-4 border rounded-lg hover:bg-accent transition-colors"
+                className="p-4 border rounded-lg hover:bg-accent transition-colors cursor-pointer"
               >
-                <h3 className="font-semibold mb-1">Manage Products</h3>
+                <h3 className="font-semibold mb-1">📦 Manage Products</h3>
                 <p className="text-sm text-muted-foreground">
                   Add, edit, or remove products from your menu
                 </p>
               </a>
               <a
-                href="/admin/promotions"
-                className="p-4 border rounded-lg hover:bg-accent transition-colors"
+                href="/admin/orders"
+                className="p-4 border rounded-lg hover:bg-accent transition-colors cursor-pointer"
               >
-                <h3 className="font-semibold mb-1">Manage Promotions</h3>
+                <h3 className="font-semibold mb-1">🛒 Manage Orders</h3>
+                <p className="text-sm text-muted-foreground">
+                  View and process customer orders
+                </p>
+              </a>
+              <a
+                href="/admin/users"
+                className="p-4 border rounded-lg hover:bg-accent transition-colors cursor-pointer"
+              >
+                <h3 className="font-semibold mb-1">👥 Manage Users</h3>
+                <p className="text-sm text-muted-foreground">
+                  Assign roles and manage user access
+                </p>
+              </a>
+              <a
+                href="/admin/promotions"
+                className="p-4 border rounded-lg hover:bg-accent transition-colors opacity-50 pointer-events-none"
+              >
+                <h3 className="font-semibold mb-1">🎯 Promotions (Coming Soon)</h3>
                 <p className="text-sm text-muted-foreground">
                   Create and manage discount campaigns
                 </p>
               </a>
               <a
-                href="/admin/odoo"
-                className="p-4 border rounded-lg hover:bg-accent transition-colors"
+                href="/admin/settings"
+                className="p-4 border rounded-lg hover:bg-accent transition-colors opacity-50 pointer-events-none"
               >
-                <h3 className="font-semibold mb-1">Odoo Integration</h3>
+                <h3 className="font-semibold mb-1">⚙️ Settings (Coming Soon)</h3>
                 <p className="text-sm text-muted-foreground">
-                  Sync products from your ERP system
+                  Configure company and receipt settings
                 </p>
               </a>
               <a
-                href="/admin/receipt"
-                className="p-4 border rounded-lg hover:bg-accent transition-colors"
+                href="/admin/odoo"
+                className="p-4 border rounded-lg hover:bg-accent transition-colors opacity-50 pointer-events-none"
               >
-                <h3 className="font-semibold mb-1">Receipt Settings</h3>
+                <h3 className="font-semibold mb-1">🔄 Odoo Sync (Coming Soon)</h3>
                 <p className="text-sm text-muted-foreground">
-                  Customize receipt layout and content
+                  Sync products from your ERP system
                 </p>
               </a>
             </div>

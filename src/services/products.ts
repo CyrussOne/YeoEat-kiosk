@@ -79,6 +79,17 @@ export const getProductById = async (
     return data as Product;
   } catch (error) {
     console.error("Error fetching product:", error);
+
+    // Fallback to FALLBACK_PRODUCTS if database query fails
+    console.log('📦 Searching fallback products for ID:', id);
+    const fallbackProduct = FALLBACK_PRODUCTS.find(p => p.id === id);
+
+    if (fallbackProduct) {
+      console.log('✅ Found product in fallback data');
+      return fallbackProduct;
+    }
+
+    console.log('❌ Product not found in database or fallback');
     return null;
   }
 };
