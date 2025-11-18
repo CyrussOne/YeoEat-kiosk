@@ -14,6 +14,7 @@ import ProductDetail from "./pages/ProductDetail";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
 import OrderComplete from "./pages/OrderComplete";
+import PrinterTest from "./pages/PrinterTest";
 import AdminAuth from "./pages/admin/AdminAuth";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProducts from "./pages/admin/Products";
@@ -41,6 +42,7 @@ const App = () => (
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-complete" element={<OrderComplete />} />
+                <Route path="/printer-test" element={<PrinterTest />} />
 
                 {/* Admin Routes */}
                 <Route path="/admin" element={<AdminAuth />} />
