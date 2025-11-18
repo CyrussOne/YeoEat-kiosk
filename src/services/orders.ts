@@ -61,7 +61,12 @@ export const createOrder = async (
     console.log("Supabase insert response - data:", order, "error:", orderError);
 
     if (orderError) {
-      console.error("Supabase order error details:", orderError);
+      console.error("❌ SUPABASE ORDER ERROR:");
+      console.error("Error message:", orderError.message);
+      console.error("Error code:", orderError.code);
+      console.error("Error details:", orderError.details);
+      console.error("Error hint:", orderError.hint);
+      console.error("Full error object:", JSON.stringify(orderError, null, 2));
       throw orderError;
     }
     if (!order) throw new Error("Failed to create order");
@@ -87,7 +92,12 @@ export const createOrder = async (
     console.log("Supabase items insert response - data:", items, "error:", itemsError);
 
     if (itemsError) {
-      console.error("Supabase items error details:", itemsError);
+      console.error("❌ SUPABASE ORDER ITEMS ERROR:");
+      console.error("Error message:", itemsError.message);
+      console.error("Error code:", itemsError.code);
+      console.error("Error details:", itemsError.details);
+      console.error("Error hint:", itemsError.hint);
+      console.error("Full error object:", JSON.stringify(itemsError, null, 2));
       throw itemsError;
     }
     if (!items) throw new Error("Failed to create order items");
