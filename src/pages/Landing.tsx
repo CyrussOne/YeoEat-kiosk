@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import AccessibilityButton from "@/components/AccessibilityButton";
 import welcomeBg from "@/assets/welcome-bg.png";
 import ukFlag from "@/assets/flag-uk.png";
@@ -18,7 +19,16 @@ const Landing = () => {
   return showLanguageSelection ? (
     <div className="w-[1080px] h-[1920px] flex items-center justify-center bg-background relative">
       <AccessibilityButton />
-      
+
+      {/* Test Button - Bottom Right */}
+      <Button
+        onClick={() => navigate("/printer-test")}
+        className="fixed bottom-8 right-8 z-50 bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
+        size="lg"
+      >
+        🖨️ Test
+      </Button>
+
       <div className="absolute inset-0 decorative-border" />
       
       <div className="relative z-10 text-center space-y-16 px-16">
@@ -90,6 +100,19 @@ const Landing = () => {
       }}
     >
       <AccessibilityButton />
+
+      {/* Test Button - Bottom Right */}
+      <Button
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent triggering language selection
+          navigate("/printer-test");
+        }}
+        className="fixed bottom-8 right-8 z-50 bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
+        size="lg"
+      >
+        🖨️ Test
+      </Button>
+
       <div className="absolute inset-0 decorative-border" />
     </div>
   );
