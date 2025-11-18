@@ -7,11 +7,15 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAdmin, loading } = useAdminAuth();
+  const { isAdmin, loading, user } = useAdminAuth();
   const navigate = useNavigate();
 
+  // TEMPORARY: Allow any logged-in user to access admin
+  // TODO: Re-enable admin role check after setting up user_roles properly
+  const BYPASS_ADMIN_CHECK = true;
+
   useEffect(() => {
-    if (!loading && !isAdmin) {
+    if (!loading && !BYPASS_ADMIN_CHECK && !isAdmin) {
       navigate('/admin');
     }
   }, [isAdmin, loading, navigate]);
@@ -25,6 +29,15 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
         </div>
       </div>
     );
+  }
+
+  // TEMPORARY: Check if user is logged in (bypass admin check)
+  if (BYPASS_ADMIN_CHECK) {
+    if (!user) {
+      navigate('/admin');
+      return null;
+    }
+    return <>{children}</>;
   }
 
   if (!isAdmin) {

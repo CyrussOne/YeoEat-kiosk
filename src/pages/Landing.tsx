@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import AccessibilityButton from "@/components/AccessibilityButton";
+import { useCart } from "@/contexts/CartContext";
 import welcomeBg from "@/assets/welcome-bg.png";
 import ukFlag from "@/assets/flag-uk.png";
 import deFlag from "@/assets/flag-de.png";
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { clearCart } = useCart();
   const [showLanguageSelection, setShowLanguageSelection] = useState(false);
   const [language, setLanguage] = useState("de"); // German as default
 
@@ -18,7 +21,25 @@ const Landing = () => {
   return showLanguageSelection ? (
     <div className="w-[1080px] h-[1920px] flex items-center justify-center bg-background relative">
       <AccessibilityButton />
-      
+
+      {/* Test Buttons - Bottom Right */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4">
+        <Button
+          onClick={() => navigate("/diagnostics")}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🔧 Debug
+        </Button>
+        <Button
+          onClick={() => navigate("/printer-test")}
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🖨️ Test
+        </Button>
+      </div>
+
       <div className="absolute inset-0 decorative-border" />
       
       <div className="relative z-10 text-center space-y-16 px-16">
@@ -30,6 +51,7 @@ const Landing = () => {
           {/* English */}
           <button
             onClick={() => {
+              clearCart(); // Clear cart for new customer
               setLanguage("en");
               localStorage.setItem("language", "en");
               navigate("/service-type");
@@ -51,6 +73,7 @@ const Landing = () => {
           {/* German */}
           <button
             onClick={() => {
+              clearCart(); // Clear cart for new customer
               setLanguage("de");
               localStorage.setItem("language", "de");
               navigate("/service-type");
@@ -90,6 +113,31 @@ const Landing = () => {
       }}
     >
       <AccessibilityButton />
+
+      {/* Test Buttons - Bottom Right */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4">
+        <Button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering language selection
+            navigate("/diagnostics");
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🔧 Debug
+        </Button>
+        <Button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering language selection
+            navigate("/printer-test");
+          }}
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 text-lg shadow-lg"
+          size="lg"
+        >
+          🖨️ Test
+        </Button>
+      </div>
+
       <div className="absolute inset-0 decorative-border" />
     </div>
   );

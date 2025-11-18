@@ -7,13 +7,30 @@ import { SUPABASE_CONFIG } from '../../config/supabase.config';
 const SUPABASE_URL = SUPABASE_CONFIG.url;
 const SUPABASE_PUBLISHABLE_KEY = SUPABASE_CONFIG.publishableKey;
 
+// Debug: Check if env vars are loaded
+console.log('=== SUPABASE CLIENT DEBUG ===');
+console.log('SUPABASE_URL:', SUPABASE_URL);
+console.log('SUPABASE_KEY exists:', !!SUPABASE_PUBLISHABLE_KEY);
+console.log('SUPABASE_KEY length:', SUPABASE_PUBLISHABLE_KEY?.length);
+console.log('All env vars:', import.meta.env);
+
+if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  console.error('❌ CRITICAL: Supabase credentials are missing!');
+  console.error('URL:', SUPABASE_URL);
+  console.error('Key exists:', !!SUPABASE_PUBLISHABLE_KEY);
+}
+
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
+export const supabase = createClient<Database>(
+  SUPABASE_URL || 'https://placeholder.supabase.co',
+  SUPABASE_PUBLISHABLE_KEY || 'placeholder',
+  {
+    auth: {
+      storage: localStorage,
+      persistSession: true,
+      autoRefreshToken: true,
+    }
   }
-});
+);

@@ -13,6 +13,7 @@ import {
   RefreshCw,
   LogOut,
   FileText,
+  Activity,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -38,6 +39,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { icon: FileText, label: 'Tax Settings', path: '/admin/tax' },
     { icon: Receipt, label: 'Receipt Layout', path: '/admin/receipt' },
     { icon: RefreshCw, label: 'Odoo Sync', path: '/admin/odoo' },
+    { icon: Activity, label: 'Diagnostic Logs', path: '/admin/diagnostic-logs' },
   ];
 
   return (

@@ -1,0 +1,61 @@
+[2025-11-18T16:06:32.047Z] ========================================
+[2025-11-18T16:06:32.047Z] YELOEAT KIOSK - SYSTEM DIAGNOSTICS
+[2025-11-18T16:06:32.047Z] ========================================
+[2025-11-18T16:06:32.047Z] 
+[2025-11-18T16:06:32.047Z] === PLATFORM INFORMATION ===
+[2025-11-18T16:06:32.047Z] Platform: web
+[2025-11-18T16:06:32.047Z] Native Platform: NO
+[2025-11-18T16:06:32.047Z] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
+[2025-11-18T16:06:32.047Z] 
+[2025-11-18T16:06:32.047Z] === ENVIRONMENT VARIABLES ===
+[2025-11-18T16:06:32.048Z] VITE_SUPABASE_URL: ✓ SET
+[2025-11-18T16:06:32.048Z]   Value: https://tnqdlzbsbbyituoexhku.supabase.co
+[2025-11-18T16:06:32.048Z] VITE_SUPABASE_PUBLISHABLE_KEY: ✓ SET
+[2025-11-18T16:06:32.048Z]   Length: 208 characters
+[2025-11-18T16:06:32.048Z]   First 20 chars: eyJhbGciOiJIUzI1NiIs...
+[2025-11-18T16:06:32.048Z]   Last 20 chars: ...4bJkoiVeKRNqCaCEflTw
+[2025-11-18T16:06:32.048Z] 
+[2025-11-18T16:06:32.048Z] === SUPABASE CONNECTION TEST ===
+[2025-11-18T16:06:32.048Z] Testing connection to Supabase...
+[2025-11-18T16:06:32.651Z] ✓ Supabase connection successful
+[2025-11-18T16:06:32.651Z]   Retrieved 1 products
+[2025-11-18T16:06:32.651Z] 
+[2025-11-18T16:06:32.651Z] === PRINTER PLUGIN DIAGNOSTICS ===
+[2025-11-18T16:06:32.651Z] Checking if Printer plugin is available...
+[2025-11-18T16:06:32.651Z] ✓ Capacitor.Plugins object exists
+[2025-11-18T16:06:32.651Z] ✓ Printer plugin found in Capacitor.Plugins
+[2025-11-18T16:06:32.651Z] 
+[2025-11-18T16:06:32.651Z] Attempting to initialize printer...
+[2025-11-18T16:06:32.955Z] ✓ initPrinter() call successful
+[2025-11-18T16:06:32.955Z]   Result: {
+  "success": false,
+  "message": "Printer is only available on Android devices"
+}
+[2025-11-18T16:06:32.955Z] 
+[2025-11-18T16:06:32.955Z] Attempting to get printer status...
+[2025-11-18T16:06:32.955Z] ✓ getPrinterStatus() call successful
+[2025-11-18T16:06:32.955Z]   Result: {
+  "isConnected": false,
+  "status": "Web environment - no hardware printer"
+}
+[2025-11-18T16:06:32.955Z] 
+[2025-11-18T16:06:32.955Z] === ORDER SYSTEM CHECK ===
+[2025-11-18T16:06:32.955Z] Test order data prepared:
+[2025-11-18T16:06:32.955Z] {
+  "order_number": "TEST-DIAG",
+  "service_type": "take-away",
+  "payment_method": "card",
+  "language": "de",
+  "subtotal": 10,
+  "tax_amount": 1.9,
+  "total": 11.9
+}
+[2025-11-18T16:06:32.955Z] ✓ Order system structure OK
+[2025-11-18T16:06:32.955Z] 
+[2025-11-18T16:06:32.955Z] === LOCALSTORAGE CHECK ===
+[2025-11-18T16:06:32.955Z] Cart data: ✓ Present
+[2025-11-18T16:06:32.955Z] Language: en
+[2025-11-18T16:06:32.955Z] 
+[2025-11-18T16:06:32.955Z] ========================================
+[2025-11-18T16:06:32.955Z] DIAGNOSTICS COMPLETE
+[2025-11-18T16:06:32.955Z] ========================================
